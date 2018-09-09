@@ -1,17 +1,17 @@
 /*
--jika inputnya  "node boggle.js" =>maka akan menampilkan
+-jika input tampilan = 0 =>maka akan menampilkan
                                 [ [ 'U', 'A', 'B', 'I' ],
                                   [ 'U', 'B', 'C', 'S' ],
                                   [ 'N', 'B', 'J', 'W' ],
                                   [ 'U', 'T', 'A', 'Y' ] ]
                                 selamat mencari...
--jika inputnya  "node boggle.js 1" =>maka akan menampilkan 
+-jika input tampilan = 1 =>maka akan menampilkan 
                                 [ [ 'U', 'A', 'B', 'I' ],
                                   [ 'U', 'B', 'C', 'S' ],
                                   [ 'N', 'B', 'J', 'W' ],
                                   [ 'U', 'T', 'A', 'Y' ] ]
                                 1 words found:
--jika inputnya  "node boggle.js 2" =>maka akan menampilkan
+-jika input tampilan = 2 =>maka akan menampilkan
                                 [ [ 'U', 'A', 'B', 'I' ],
                                   [ 'U', 'B', 'C', 'S' ],
                                   [ 'N', 'B', 'J', 'W' ],
@@ -23,17 +23,24 @@
           [ 'R', 'R', 'I', 'A' ],
           [ 'K', 'T', 'S', 'U' ],
           [ 'M', 'G', 'R', 'Y' ] ]
-        ganti board ^
-        [ [ 'A', 'A', 'A', 'H' ],
-          [ 'B', 'N', 'A', 'L' ],
-          [ 'A', 'D', 'I', 'M' ],
+        not found                       "tampilan ini hanya jika pencari hasil diatas 0 diaktifkan"
+         [ [ 'U', 'A', 'B', 'I' ],      "Gunakan Board Yang Bawah"
+           [ 'U', 'B', 'C', 'S' ],
+           [ 'N', 'B', 'J', 'W' ],
+           [ 'U', 'T', 'A', 'Y' ] ]
+        1 words found:
+        ABIS  
+-jika pencari hasil diatas 0 diaktifkan,tampilan nya seperti ini 
+        [ [ 'E', 'S', 'N', 'A' ],
+          [ 'R', 'R', 'I', 'A' ],       "tampilan ini jika pencari hasil diatas 0 dinonaktifkan"
+          [ 'K', 'T', 'S', 'U' ],
           [ 'M', 'G', 'R', 'Y' ] ]
-        "Gunakan Board Yang Bawah"   
+        not found          
 -Maaf karna sudah terlanjur jadi saya ngumpulkan yang ini,Masih Belum Sempurna...                                     
 */
+var tampilan = 2;//jika input 1 hanya menampilkan jumlah word,jka input 2 hasilnya kata nya juga akan dimunculkan
 var kata = ["AYAM","ABAD","ABADI","ABAH","AMPAS","ABAL","ABANG","ABANGAN","ABDI","ANGKER","ABIS","ABJAD","ABNORMAL","ABANG","ABORSI","ABRASI","ABSEN","ABSENSI","ABSOLUT","ABSTAIN","ABSTRAK","ABSURD","ABUABU","ABU","ANGIN","ANGAN","AKSI"];
-var tampilkan = Number(process.argv[2]);//jika input 1 hanya menampilkan jumlah word,jka input 2 hasilnya kata nya juga akan dimunculkan
-var dimensi = 5;
+var dimensi = 4;
 function boardBuild(dimensi){
     const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let hasil = [];
@@ -50,7 +57,7 @@ function boardBuild(dimensi){
 }
 var board = boardBuild(dimensi)
 
-function inputKata (board,kata,tampilkan){
+function inputKata (board,kata,tampilan){
     let min = 2;
     let max = dimensi;
     let jmlhKata = Math.floor(Math.random()*(max - min)+min);
@@ -105,8 +112,8 @@ function inputKata (board,kata,tampilkan){
                     jalur.unshift([jalur[0][0]+1,jalur[0][1]-1])
                     idx++
                 }else{
-                    console.log('===Ayooo-Apaaaa===');
-                    return inputKata(board,kata,tampilkan)
+                    // console.log('===Ayooo-Apaaaa===');
+                    return inputKata(board,kata,tampilan)
                 }
             }
         }
@@ -127,7 +134,7 @@ function inputKata (board,kata,tampilkan){
         return false
     }
     //console.log(kataCheck)
-    function solveMe (history,kataCheck,board,tampilkan){
+    function solveMe (history,kataCheck,board,tampilan){
         let balikHistory = []
         for(let i = 0;i < history.length;i++){
             let isi = [];
@@ -151,13 +158,13 @@ function inputKata (board,kata,tampilkan){
             }
         }
         if(hasil.length === 0){
-            console.log('ganti board ^')
-            return inputKata(board,kata,tampilkan)
+            console.log('not found')
+            //return inputKata(board,kata,tampilan);//"pencari hasil diatas 0" >>> jika aktif,akan dibuatkan board baru saat tidak ada kata yang match
         }else{
-            if(tampilkan == 2){
+            if(tampilan == 2){
                 console.log(String(hasil.length)+' words found: ')
                 console.log(hasil.join('\n'))
-            }else if(tampilkan == 1){
+            }else if(tampilan == 1){
                 console.log(String(hasil.length)+' words found ')
             }else{
                 console.log('selamat mencari...')
@@ -167,7 +174,7 @@ function inputKata (board,kata,tampilkan){
         
     }
     console.log(board)
-    solveMe(history,kataCheck,board,tampilkan)    
+    solveMe(history,kataCheck,board,tampilan)    
 }
-//console.log(board)
-inputKata(board,kata,tampilkan)
+
+inputKata(board,kata,tampilan)
