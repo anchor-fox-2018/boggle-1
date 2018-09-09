@@ -1,3 +1,16 @@
+/*
+PSEUDOCODE
+
+1. make the board using for loop and Math.random() (line 11 - 35)
+2. add the words as a string, along with each coordinates in an array (so, nested array) (line 47 - 57)
+3. first filter: length less than 4 or more than max from board (line 63 - 70)
+4. second filter: for each letter, if it doesn't appear on the words string, remove it (line 77 - 90)
+5. third filter: for each letter, if the letter count is more than what appears on words string, remove it (line 97 - 111)
+6. fourth filter: for each letter, map the coordinates from words string and check if from first to second, the coordinates doesn't move more than 1 to left, right, bottom, top (in combination of X-Y), if true, put boolean true on it. if the amount of true is equal to length of string, add to result (118 - 155)
+7. display result (line 158)
+*/
+
+
 // importing words
 let words = require('./data.js').dataWords;
 
